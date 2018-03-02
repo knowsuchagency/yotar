@@ -1,8 +1,9 @@
-# You don't need a task runner (with Python)
 
 This story is about task automation and build tools.
 
-Feel free to [skip ahead](#YOTAR)
+Feel free to [**skip ahead**](#yotar) to the code and check out [the repo itself](https://github.com/knowsuchagency/yotar).
+
+For a far more fleshed out example of the following, [**check out my cookiecutter**](https://github.com/knowsuchagency/python-package-template/blob/master/%7B%7Bcookiecutter.project_slug%7D%7D/run.py).
 
 These are two separate, but inter-related domains, however, we're going to treat them both as the same requirement in this article for the sake of argumentation.
 
@@ -36,9 +37,11 @@ Among them: Fabric, Ansible, Gulp, Grunt, Chef, Puppet, npm (in some capacity) -
 
 Granted, what many of these tools offer is beyond the scope of Make or the typical bash script (automation on other machines through SSH, for example), but at the core of each of these tools is the intent to keep you from repeating yourself. It's task automation in one form or another, either for building software, automating dev-ops, or whatever.
 
-**Enough pontification! Let's look at some code!**
+**Enough pontification! Let's look at some code!**<a name="yotar"></a>
 
-# [YOTAR (Your Own Task Runner)](https://github.com/knowsuchagency/yotar)
+# [YOTAR](https://github.com/knowsuchagency/yotar)
+
+## Your own Task Runner
 
 Apart from the fact that Python is a great programming language to begin with, the standard library provides bevy of utilities that make it really powerful as a means of interacting with the operating system. 
 
