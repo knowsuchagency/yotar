@@ -54,7 +54,7 @@ def env(**kwargs) -> dict:
     yield os.environ
 
     for key in os.environ:
-        if key not in original_environment:
+        if key in kwargs and os.environ[key] == kwargs[key]:
             del os.environ[key]
         else:
             os.environ[key] = original_environment[key]
