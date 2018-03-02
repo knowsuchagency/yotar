@@ -1,3 +1,8 @@
+# Note
+
+This isn't a package. This is just some code for you to make to read and use (or not) as you wish
+
+---
 
 This story is about task automation and build tools.
 
