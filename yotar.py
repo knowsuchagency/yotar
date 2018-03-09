@@ -35,7 +35,7 @@ def shell(command: str, check=True, capture=False) -> sp.CompletedProcess:
 
 
 @contextmanager
-def cd(path_: T.Union[os.PathLike, str]):
+def cd(path_: Pathy):
     """Change the current working directory."""
     cwd = os.getcwd()
     os.chdir(path_)
@@ -44,7 +44,7 @@ def cd(path_: T.Union[os.PathLike, str]):
 
 
 @contextmanager
-def env(**kwargs) -> dict:
+def env(**kwargs) -> T.Iterator[os._Environ]:
     """Set environment variables and yield new environment dict."""
     original_environment = copy.deepcopy(os.environ)
 
@@ -61,7 +61,7 @@ def env(**kwargs) -> dict:
 
 
 @contextmanager
-def path(*paths: T.Union[os.PathLike, str], prepend=False, expand_user=True) -> T.List[str]:
+def path(*paths: Pathy, prepend=False, expand_user=True) -> T.Iterator[T.List[str]]:
     """
     Add the paths to $PATH and yield the new $PATH as a list.
 
@@ -69,20 +69,22 @@ def path(*paths: T.Union[os.PathLike, str], prepend=False, expand_user=True) -> 
         prepend: prepend paths to $PATH else append
         expand_user: expands home if ~ is used in path strings
     """
-    paths = list(paths)
+    paths_list: T.List[Pathy] = list(paths)
 
-    for index, _path in enumerate(paths):
+    paths_str_list: T.List[str]
+
+    for index, _path in enumerate(paths_list):
         if not isinstance(_path, str):
-            paths[index] = _path.__fspath__()
+            paths_str_list[index] = _path.__fspath__()
         elif expand_user:
-            paths[index] = os.path.expanduser(_path)
+            paths_str_list[index] = os.path.expanduser(_path)
 
     original_path = os.environ['PATH'].split(':')
 
-    paths = paths + original_path if prepend else original_path + paths
+    paths_str_list = paths_str_list + original_path if prepend else original_path + paths_str_list
 
-    with env(PATH=':'.join(paths)):
-        yield paths
+    with env(PATH=':'.join(paths_str_list)):
+        yield paths_str_list
 
 
 @contextmanager
